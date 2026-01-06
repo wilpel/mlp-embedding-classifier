@@ -1,6 +1,6 @@
-# Embedding ML
+# MLP Embedding Classifier
 
-Semantic text classification using OpenAI embeddings and neural networks.
+Semantic text classification using OpenAI embeddings and neural networks. Detect PII, compare resumes, and classify text using meaning instead of regex.
 
 ## Overview
 
@@ -36,20 +36,22 @@ Finds which embedding dimensions matter for professional similarity:
 ## Project Structure
 
 ```
-embedding-ml/
+mlp-embedding-classifier/
 ├── src/
 │   ├── embeddings.py        # OpenAI embedding wrapper
 │   ├── pii_detector.py      # PII detection model
 │   └── resume_similarity.py # Resume similarity model
 ├── data/
-│   ├── pii_data.py          # PII training data (200+ examples)
+│   ├── pii_data.py          # PII training data (328 samples)
 │   └── resume_data.py       # Resume training data (8 categories)
 ├── models/
 │   ├── pii_model.pkl        # Trained PII model
 │   └── resume_model.pkl     # Trained resume model
 ├── train_pii.py             # Train PII detector
 ├── train_resume.py          # Train resume similarity
+├── detect.py                # CLI for PII detection
 ├── demo.py                  # Demo both models
+├── .env.example             # Environment template
 └── requirements.txt
 ```
 
@@ -64,7 +66,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Set up OpenAI API key
-echo "OPENAI_API_KEY=your-key-here" > .env
+cp .env.example .env
+# Edit .env and add your API key
 ```
 
 ## Usage
@@ -139,14 +142,14 @@ This reduces noise from irrelevant dimensions and improves discrimination.
 ## Training Data
 
 ### PII Data
-- **117 PII examples**: emails, phones, addresses, SSNs, DOBs, financial, medical
-- **90 clean examples**: business communications, technical docs, announcements
-- Balanced classes for robust training
+- **147 PII examples**: emails, phones, addresses, SSNs, DOBs, financial, medical
+- **181 clean examples**: business communications, technical docs, casual conversations
+- Total: 328 samples for robust training
 
 ### Resume Data
 - **8 categories**: Engineering, Marketing, Finance, Healthcare, Legal, Sales, Design, Operations
-- **25 resumes per category**: Varied roles and seniority levels
-- Total: 200 resumes for pair-based training
+- **170 resumes total**: Varied roles and seniority levels
+- 3,680 pairs for similarity training
 
 ## Results
 
